@@ -26,7 +26,7 @@ require (
 	gopkg.in/telebot.v3 v3.3.8
 )
 
-replace github.com/fclairamb/ftpserverlib => ../ftpserverlib
+replace github.com/fclairamb/ftpserverlib => github.com/hujun-open/ftpserverlib v0.0.1
 
 require (
 	cel.dev/expr v0.24.0 // indirect
