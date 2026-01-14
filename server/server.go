@@ -12,6 +12,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -97,6 +98,7 @@ func (s *Server) GetSettings() (*serverlib.Settings, error) {
 		TLSRequired:              tlsRequired,
 		IdleTimeout:              int(conf.IdleTimeout.Seconds()),
 		EnableHASH:               conf.Extensions.EnableHASH,
+		ParamMutationHandler:     serverlib.MakePathHandler(s.translatePath),
 	}, nil
 }
 func (s *Server) ReloadConfig() error {
@@ -337,4 +339,15 @@ func (s *Server) GetTLSConfig() (*tls.Config, error) {
 	})
 
 	return s.tlsConfig, s.tlsError
+}
+
+func (s *Server) translatePath(in string) string {
+	if s.config.Content.PathTranslation != nil {
+		for old, new := range s.config.Content.PathTranslation {
+			if strings.Contains(in, old) {
+				return strings.ReplaceAll(in, old, new)
+			}
+		}
+	}
+	return in
 }

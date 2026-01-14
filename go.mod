@@ -26,6 +26,8 @@ require (
 	gopkg.in/telebot.v3 v3.3.8
 )
 
+replace github.com/fclairamb/ftpserverlib => ../ftpserverlib
+
 require (
 	cel.dev/expr v0.24.0 // indirect
 	cloud.google.com/go v0.123.0 // indirect
